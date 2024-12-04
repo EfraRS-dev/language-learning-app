@@ -17,6 +17,8 @@ async function loginForAccessToken() {
     const formData = new URLSearchParams();
     formData.append('username', username);
     formData.append('password', password);
+    
+    window.location.href = '../dashboard/dashboard.html';
 
     try {
         const response = await fetch(url, {
@@ -33,7 +35,7 @@ async function loginForAccessToken() {
             localStorage.setItem('token', data.access_token); // 'access_token' debe coincidir con la respuesta
             window.location.href = '../dashboard/dashboard.html';
         } else {
-            alert(data.detail); // Asegúrate de acceder correctamente al mensaje de error
+            alert(data.detail);
         }
     } catch (error) {
         console.error('Error during login:', error);
