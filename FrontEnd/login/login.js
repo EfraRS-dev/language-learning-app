@@ -22,7 +22,7 @@ function login() {
 async function loginForAccessToken() {
     const username = document.getElementById('username-field').value;
     const password = document.getElementById('password-field').value;
-    const url = 'http://0.0.0.0:8000/token';
+    const url = 'http://127.0.0.1:8000/token';
 
     try {
         const response = await fetch(url, {
@@ -46,4 +46,34 @@ async function loginForAccessToken() {
         alert('An error occurred during login');
     }
 }
+
+async function registerUser() {
+    const username = document.getElementById('newusername').value;
+    const email = document.getElementById('newemail').value;
+    const password = document.getElementById('newpassword').value;
+    const url = 'http://127.0.0.1:8000/register';
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, email, password }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert('Registro exitoso, ahora puedes iniciar sesión.');
+            window.location.href = '../idioma/idioma.html';
+        } else {
+            alert(data.detail || 'Error al registrarse. Por favor, verifica los datos.');
+        }
+    } catch (error) {
+        console.error('Error during registration:', error);
+        alert('Ocurrió un error durante el registro.');
+    }
+}
+
 

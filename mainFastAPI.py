@@ -23,7 +23,8 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:5500"],  # Permite el origen desde tu frontend
+    #allow_origins=["http://127.0.0.1:5500"],  # Permite el origen desde tu frontend
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],  # Permite todos los métodos HTTP
     allow_headers=["*"],  # Permite todos los encabezados HTTP
@@ -39,9 +40,8 @@ def get_db():
 
 # Pydantic models
 class UserCreate(BaseModel):
-    nombre: str
-    email: str
     username: str
+    email: str
     password: str
 
 class UserResponse(BaseModel):
@@ -117,7 +117,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
 @app.post("/users/", response_model=UserResponse)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
     password_hash = bcrypt.hash(user.password)
-    nuevo_usuario = crear_usuario(db, user.nombre, user.email, user.username, password_hash)
+    nuevo_usuario = crear_usuario(db, user.email, user.username, password_hash)
     return nuevo_usuario
 
 # Get a user by ID endpoint
@@ -183,7 +183,7 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
     hashed_password = bcrypt.hash(user.password)
 
     # Crear el nuevo usuario en la base de datos
-    nuevo_usuario = crear_usuario(db, user.nombre, user.email, user.username, hashed_password)
+    nuevo_usuario = crear_usuario(db, user.email, user.username, hashed_password)
 
     # Retornar la respuesta con la información del usuario creado
     return nuevo_usuario
