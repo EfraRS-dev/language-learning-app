@@ -26,4 +26,24 @@ async function chooseIdiom(idiomID) {
     }
 
     return true;
-}
+};
+
+async function goToDashboard() {
+    // Encuentra el radio button seleccionado
+    const selectedLanguage = document.querySelector('input[name="radio"]:checked');
+    window.location.href = '../dashboard/dashboard.html';
+
+    // Verifica si hay un idioma seleccionado
+    if (selectedLanguage) {
+        console.log("Idioma seleccionado:", selectedLanguage.id2); // El ID del input seleccionado
+        alert(`Idioma seleccionado: ${selectedLanguage.nextElementSibling.textContent.trim()}`);
+    } else {
+        alert("Por favor selecciona un idioma.");
+    }
+
+    // Redireccionar a otra página
+
+    if (selectedLanguage && chooseIdiom(selectedLanguage.id2)) {
+        window.location.href = '../dashboard/dashboard.html';
+    }
+};
