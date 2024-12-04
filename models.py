@@ -40,9 +40,9 @@ class Leccion(Base):
     tipo = Column(String(50))
     fecha_creacion = Column(DateTime, server_default=func.now())
 
-    # Relación con usuarios
+    # Relación con cursos
     curso_id = Column(Integer, ForeignKey("cursos.curso_id", ondelete="CASCADE"), nullable=False)
-    usuario = relationship("cursos", back_populates="lecciones")
+    curso = relationship("Curso", back_populates="lecciones")
 
 class Curso(Base):
     __tablename__ = "cursos"
