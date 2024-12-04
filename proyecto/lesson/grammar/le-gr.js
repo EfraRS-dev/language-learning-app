@@ -156,28 +156,28 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-async function fetchQuiz(lessonID) {
-    const url = `http://localhost:8000/questions/${lessonID}`; // Asegúrate de que el servidor esté corriendo
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`Error: ${response.statusText}`);
-        }
-        const questions = await response.json();
-        console.log('Preguntas obtenidas:', questions);
-        return questions;
-    } catch (error) {
-        console.error('Error al obtener las preguntas:', error);
-        return [];
-    }
-}
+// async function fetchQuiz(lessonID) {
+//     const url = `http://localhost:8000/questions/${lessonID}`; // Asegúrate de que el servidor esté corriendo
+//     try {
+//         const response = await fetch(url);
+//         if (!response.ok) {
+//             throw new Error(`Error: ${response.statusText}`);
+//         }
+//         const questions = await response.json();
+//         console.log('Preguntas obtenidas:', questions);
+//         return questions;
+//     } catch (error) {
+//         console.error('Error al obtener las preguntas:', error);
+//         return [];
+//     }
+// }
 
-// Llamada al endpoint para obtener preguntas
-const lessonID = 1101; // Cambia según sea necesario
-fetchQuiz(lessonID).then(questions => {
-    const quiz = questions;
-    console.log('Quiz listo:', quiz);
-});
+// // Llamada al endpoint para obtener preguntas
+// const lessonID = 1101; // Cambia según sea necesario
+// fetchQuiz(lessonID).then(questions => {
+//     const quiz = questions;
+//     console.log('Quiz listo:', quiz);
+// });
 
 /*const quiz = [
 	{
