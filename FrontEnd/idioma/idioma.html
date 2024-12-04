@@ -25,7 +25,7 @@
         <div class="group-languages">
 
             <div class="input-container">
-                <input id="lan-es" type="radio" name="radio">
+                <input id="lan-es" type="radio" name="radio" id2=1012>
                 <div class="radio-title">
                     <span class="iconify" data-icon="flag:es-4x3"></span>
                     <label>Español</label>
@@ -33,7 +33,7 @@
             </div>
 
             <div class="input-container">
-                <input id="lan-in" type="radio" name="radio">
+                <input id="lan-in" type="radio" name="radio" id2=1011>
                 <div class="radio-title">
                     <span class="iconify" data-icon="flag:us-4x3"></span>
                     <label>Inglés</label>
@@ -41,7 +41,7 @@
             </div>
 
             <div class="input-container">
-                <input id="lan-fr" type="radio" name="radio">
+                <input id="lan-fr" type="radio" name="radio" id2=1013>
                 <div class="radio-title">
                     <span class="iconify" data-icon="flag:fr-4x3"></span>
                     <label>Francés</label>
@@ -49,7 +49,7 @@
             </div>
 
             <div class="input-container">
-                <input id="lan-it" type="radio" name="radio">
+                <input id="lan-it" type="radio" name="radio" id2=1014>
                 <div class="radio-title">
                     <span class="iconify" data-icon="flag:it-4x3"></span>
                     <label>Italiano</label>
@@ -94,13 +94,28 @@
                     <i class='bx bx-send'></i>
                 </span>
             </button>
-            
+
         </div>
     </div>
 
-    <script>
+    <script src="idioma.js">
         document.querySelector('.send-btn').addEventListener('click', function () {
-            window.location.href = '../dashboard/dashboard.html';
+            // Encuentra el radio button seleccionado
+            const selectedLanguage = document.querySelector('input[name="radio"]:checked');
+
+            // Verifica si hay un idioma seleccionado
+            if (selectedLanguage) {
+                console.log("Idioma seleccionado:", selectedLanguage.id2); // El ID del input seleccionado
+                alert(`Idioma seleccionado: ${selectedLanguage.nextElementSibling.textContent.trim()}`);
+            } else {
+                alert("Por favor selecciona un idioma.");
+            }
+
+            // Redireccionar a otra página
+
+            if (selectedLanguage && chooseIdiom(selectedLanguage.id2)) {
+                window.location.href = '../dashboard/dashboard.html';
+            }
         });
     </script>
 

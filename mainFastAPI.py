@@ -156,6 +156,7 @@ async def get_questions(lesson_id: int):
         raise HTTPException(status_code=404, detail="Lesson not found")
     return lesson.get("questions", [])
 
+# Register endpoint
 @app.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def register_user(user: UserCreate, db: Session = Depends(get_db)):
     # Verificar si el nombre de usuario ya está registrado
