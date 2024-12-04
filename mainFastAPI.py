@@ -113,13 +113,6 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
         raise credentials_exception
     return user
 
-# Create a user endpoint
-@app.post("/users/", response_model=UserResponse)
-def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    password_hash = bcrypt.hash(user.password)
-    nuevo_usuario = crear_usuario(db, user.email, user.username, password_hash)
-    return nuevo_usuario
-
 # Get a user by ID endpoint
 @app.get("/users/{user_id}", response_model=UserResponse)
 def get_user(user_id: int, db: Session = Depends(get_db)):
@@ -179,16 +172,12 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
             detail="El correo electrónico ya está registrado.",
         )
 
-    # Hash de la contraseña
     hashed_password = bcrypt.hash(user.password)
 
-    # Crear el nuevo usuario en la base de datos
     nuevo_usuario = crear_usuario(db, user.email, user.username, hashed_password)
 
-    # Retornar la respuesta con la información del usuario creado
     return nuevo_usuario
 
-# Run the application /// No sé si sea prescindible
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
