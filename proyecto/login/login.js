@@ -19,33 +19,31 @@ function login() {
     fetch("http://0.0.0.0:8000/token")
 };
 
-async function loginForAccessToken(username, password) {
-    const url = 'http://0.0.0.0:8000/token'; // Asegúrate de usar la URL completa si es necesario
-    const data = new URLSearchParams({
-        username: username,
-        password: password
-    });
+async function loginForAccessToken() {
+    const username = document.getElementById('username-field').value;
+    const password = document.getElementById('password-field').value;
+    const url = 'http://0.0.0.0:8000/token';
 
     try {
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
             },
-            body: data,
+            body: JSON.stringify({ username, password }),
         });
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(`Error: ${errorData.detail}`);
-        }
+        const data = await response.json();
 
-        const tokenData = await response.json();
-        console.log('Access Token:', tokenData.access_token);
-        return tokenData;
+        if (response.ok) {
+            localStorage.setItem('token', data.token);
+            window.location.href = '../dashboard/dashboard.html';
+        } else {
+            alert(data.message);
+        }
     } catch (error) {
-        console.error('Error logging in:', error.message);
-        return null;
+        console.error('Error during login:', error);
+        alert('An error occurred during login');
     }
 }
 
