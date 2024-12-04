@@ -22,7 +22,7 @@ async function loginForAccessToken() {
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded', // Cambiar a este tipo
             },
             body: formData,
         });
@@ -30,16 +30,17 @@ async function loginForAccessToken() {
         const data = await response.json();
 
         if (response.ok) {
-            localStorage.setItem('token', data.token);
+            localStorage.setItem('token', data.access_token); // 'access_token' debe coincidir con la respuesta
             window.location.href = '../dashboard/dashboard.html';
         } else {
-            alert(data.message);
+            alert(data.detail); // Asegúrate de acceder correctamente al mensaje de error
         }
     } catch (error) {
         console.error('Error during login:', error);
         alert('An error occurred during login');
     }
 }
+
 
 async function registerUser() {
     const username = document.getElementById('newusername').value;

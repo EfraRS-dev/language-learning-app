@@ -3,7 +3,8 @@ from models import Usuario, Estadistica
 
 # Crear un nuevo usuario
 def crear_usuario(db: Session, email: str, username: str, password_hash: str):
-    nuevo_usuario = Usuario(nombre= "Jhon Doe", email=email, username=username, password_hash=password_hash)
+    mitad_username = username[:len(username) // 2]
+    nuevo_usuario = Usuario(nombre= mitad_username, email=email, username=username, password_hash=password_hash)
     db.add(nuevo_usuario)
     db.commit()
     db.refresh(nuevo_usuario)
