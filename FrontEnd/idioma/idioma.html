@@ -9,6 +9,7 @@
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="idioma.css">
+    <script src="idioma.js" defer></script>
 </head>
 
 <body>
@@ -97,27 +98,6 @@
 
         </div>
     </div>
-
-    <script src="idioma.js">
-        document.querySelector('.send-btn').addEventListener('click', function () {
-            // Encuentra el radio button seleccionado
-            const selectedLanguage = document.querySelector('input[name="radio"]:checked');
-
-            // Verifica si hay un idioma seleccionado
-            if (selectedLanguage) {
-                console.log("Idioma seleccionado:", selectedLanguage.id2); // El ID del input seleccionado
-                alert(`Idioma seleccionado: ${selectedLanguage.nextElementSibling.textContent.trim()}`);
-            } else {
-                alert("Por favor selecciona un idioma.");
-            }
-
-            // Redireccionar a otra página
-
-            if (selectedLanguage && chooseIdiom(selectedLanguage.id2)) {
-                window.location.href = '../dashboard/dashboard.html';
-            }
-        });
-    </script>
 
 </body>
 
