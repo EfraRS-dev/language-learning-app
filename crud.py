@@ -13,6 +13,10 @@ def crear_usuario(db: Session, nombre: str, email: str, username: str, password_
 def obtener_usuario_por_id(db: Session, usuario_id: int):
     return db.query(Usuario).filter(Usuario.usuario_id == usuario_id).first()
 
+# Obtener un usuario por username
+def obtener_usuario_por_username(db: Session, usuario_username: str):
+    return db.query(Usuario).filter(Usuario.username == usuario_username).first()
+
 # Actualizar estadísticas
 def actualizar_estadisticas(db: Session, usuario_id: int, vocabulario: int, gramatica: int, habla: int):
     estadistica = db.query(Estadistica).filter(Estadistica.usuario_id == usuario_id).first()

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLA</title>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="idioma.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>¿Que idioma quieres aprender?</h1>
+
+        <form action="">
+            <div class="search-box">
+                <input type="search" placeholder="Buscar">
+                <i class='bx bx-search'></i>
+            </div>
+        </form>
+        <div class="group-languages">
+
+            <div class="input-container">
+                <input id="lan-es" type="radio" name="radio">
+                <div class="radio-title">
+                    <span class="iconify" data-icon="flag:es-4x3"></span>
+                    <label>Español</label>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <input id="lan-in" type="radio" name="radio">
+                <div class="radio-title">
+                    <span class="iconify" data-icon="flag:us-4x3"></span>
+                    <label>Inglés</label>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <input id="lan-fr" type="radio" name="radio">
+                <div class="radio-title">
+                    <span class="iconify" data-icon="flag:fr-4x3"></span>
+                    <label>Francés</label>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <input id="lan-it" type="radio" name="radio">
+                <div class="radio-title">
+                    <span class="iconify" data-icon="flag:it-4x3"></span>
+                    <label>Italiano</label>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <input id="lan-al" type="radio" name="radio">
+                <div class="radio-title">
+                    <span class="iconify" data-icon="flag:de-4x3"></span>
+                    <label>Alemán</label>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <input id="lan-pt" type="radio" name="radio">
+                <div class="radio-title">
+                    <span class="iconify" data-icon="flag:br-4x3"></span>
+                    <label>Portugés</label>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <input id="lan-md" type="radio" name="radio">
+                <div class="radio-title">
+                    <span class="iconify" data-icon="flag:cn-4x3"></span>
+                    <label>Mandarín</label>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <input id="lan-cn" type="radio" name="radio">
+                <div class="radio-title">
+                    <span class="iconify" data-icon="flag:kr-4x3"></span>
+                    <label>Coreano</label>
+                </div>
+            </div>
+
+            <button type="button" class="send-btn">
+                <span class="btn-tx"> Enviar</span>
+                <span class="btn-icon">
+                    <i class='bx bx-send'></i>
+                </span>
+            </button>
+            
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('.send-btn').addEventListener('click', function () {
+            window.location.href = '../dashboard/dashboard.html';
+        });
+    </script>
+
+</body>
+
+</html>
