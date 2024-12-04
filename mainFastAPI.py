@@ -1,14 +1,18 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from passlib.hash import bcrypt
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
-from typing import Optional
+from typing import Optional, List
+from models import Usuario as User
 
-from db_config import SessionLocal
+from db_config import SessionLocal, client
 from crud import crear_usuario, obtener_usuario_por_id, actualizar_estadisticas, obtener_usuario_por_username
+db = client["LLA"]
+collection = db["English"]
 
 # Secret key to encode and decode JWT tokens
 SECRET_KEY = "your_secret_key"
@@ -16,6 +20,14 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:5500"],  # Permite el origen desde tu frontend
+    allow_credentials=True,
+    allow_methods=["*"],  # Permite todos los métodos HTTP
+    allow_headers=["*"],  # Permite todos los encabezados HTTP
+)
 
 # Dependency to get the database session
 def get_db():
@@ -49,6 +61,11 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     username: Optional[str] = None
+    
+class Question(BaseModel):
+    q: str
+    options: List[str]
+    answer: int
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -137,6 +154,39 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 @app.get("/users/me", response_model=UserResponse)
 async def read_users_me(current_user: UserResponse = Depends(get_current_user)):
     return current_user
+
+# Get questions endpoint
+@app.get("/questions/{lesson_id}", response_model=List[Question])
+async def get_questions(lesson_id: int):
+    lesson = collection.find_one({"lessonID": lesson_id})
+    if not lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+    return lesson.get("questions", [])
+
+@app.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
+def register_user(user: UserCreate, db: Session = Depends(get_db)):
+    # Verificar si el nombre de usuario ya está registrado
+    if db.query(User).filter(User.username == user.username).first():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="El nombre de usuario ya está registrado.",
+        )
+
+    # Verificar si el correo electrónico ya está registrado
+    if db.query(User).filter(User.email == user.email).first():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="El correo electrónico ya está registrado.",
+        )
+
+    # Hash de la contraseña
+    hashed_password = bcrypt.hash(user.password)
+
+    # Crear el nuevo usuario en la base de datos
+    nuevo_usuario = crear_usuario(db, user.nombre, user.email, user.username, hashed_password)
+
+    # Retornar la respuesta con la información del usuario creado
+    return nuevo_usuario
 
 # Run the application /// No sé si sea prescindible
 if __name__ == "__main__":
