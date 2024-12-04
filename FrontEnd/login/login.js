@@ -10,19 +10,13 @@ loginBtn.addEventListener('click', () => {
     container.classList.remove('active');
 });
 
-function login() {
-    const username = document.getElementById("username-field")
-    const password = document.getElementById("password-field")
-    const formData = FormData()
-    formData.append("username", username)
-    formData.Append("password", password)
-    fetch("http://0.0.0.0:8000/token")
-};
-
 async function loginForAccessToken() {
     const username = document.getElementById('username-field').value;
     const password = document.getElementById('password-field').value;
     const url = 'http://127.0.0.1:8000/token';
+    const formData = new URLSearchParams();
+    formData.append('username', username);
+    formData.append('password', password);
 
     try {
         const response = await fetch(url, {
@@ -30,7 +24,7 @@ async function loginForAccessToken() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password }),
+            body: formData,
         });
 
         const data = await response.json();
